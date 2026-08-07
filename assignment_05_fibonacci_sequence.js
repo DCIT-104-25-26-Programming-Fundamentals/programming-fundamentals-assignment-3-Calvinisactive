@@ -54,4 +54,71 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readlineSync = require('readline-sync');
+
+function generateFibonacciTerms(n) {
+  const terms = [];
+  if (n >= 1) {
+    terms.push(0);
+  }
+  if (n >= 2) {
+    terms.push(1);
+  }
+
+  for (let i = 2; i < n; i += 1) {
+    const next = terms[i - 1] + terms[i - 2];
+    terms.push(next);
+  }
+
+  return terms;
+}
+
+function isFibonacciNumber(value) {
+  if (value < 0 || !Number.isInteger(value)) {
+    return false;
+  }
+
+  if (value === 0 || value === 1) {
+    return true;
+  }
+
+  let a = 0;
+  let b = 1;
+  while (b < value) {
+    const next = a + b;
+    a = b;
+    b = next;
+  }
+
+  return b === value;
+}
+
+function main() {
+  const nInput = readlineSync.question('How many terms? ');
+  const n = Number(nInput);
+
+  if (!Number.isInteger(n) || n <= 0) {
+    console.log('Error: N must be a positive integer.');
+    return;
+  }
+
+  const sequence = generateFibonacciTerms(n);
+  console.log(`Fibonacci sequence: ${sequence.join(' ')}`);
+
+  const valueInput = readlineSync.question('Enter a number to check: ');
+  const value = Number(valueInput);
+
+  if (!Number.isInteger(value) || value < 0) {
+    console.log(`${valueInput} is NOT a Fibonacci number.`);
+    return;
+  }
+
+  if (isFibonacciNumber(value)) {
+    console.log(`${value} is a Fibonacci number.`);
+  } else {
+    console.log(`${value} is NOT a Fibonacci number.`);
+  }
+}
+
+main();
 
