@@ -108,11 +108,11 @@ function exponentiate(a, b) {
 
 function promptNumber(promptText) {
   const input = readlineSync.question(promptText);
-  const value = Number(input);
-  if (Number.isNaN(value)) {
+  const number = Number(input);
+  if (Number.isNaN(number)) {
     return null;
   }
-  return value;
+  return number;
 }
 
 function showMenu() {
@@ -137,7 +137,6 @@ function main() {
 
     if (choice === '7') {
       console.log('Goodbye!');
-      running = false;
       break;
     }
 
@@ -157,7 +156,7 @@ function main() {
 
     let result;
     let operator;
-    let errorMessage = null;
+    let error = null;
 
     switch (choice) {
       case '1':
@@ -174,7 +173,7 @@ function main() {
         break;
       case '4':
         if (second === 0) {
-          errorMessage = 'Error: Cannot divide by zero.';
+          error = 'Error: Cannot divide by zero.';
         } else {
           result = divide(first, second);
           operator = '/';
@@ -182,7 +181,7 @@ function main() {
         break;
       case '5':
         if (second === 0) {
-          errorMessage = 'Error: Cannot divide by zero.';
+          error = 'Error: Cannot divide by zero.';
         } else {
           result = modulus(first, second);
           operator = '%';
@@ -193,11 +192,11 @@ function main() {
         operator = '**';
         break;
       default:
-        errorMessage = 'Error: Invalid choice. Please select a number from 1 to 7.';
+        error = 'Error: Invalid choice. Please select a number from 1 to 7.';
     }
 
-    if (errorMessage) {
-      console.log(errorMessage);
+    if (error !== null) {
+      console.log(error);
       console.log('');
       continue;
     }
