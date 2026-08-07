@@ -74,4 +74,138 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+const readlineSync = require('readline-sync');
+
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return a / b;
+}
+
+function modulus(a, b) {
+  if (b === 0) {
+    return null;
+  }
+  return a % b;
+}
+
+function exponentiate(a, b) {
+  return a ** b;
+}
+
+function promptNumber(promptText) {
+  const input = readlineSync.question(promptText);
+  const value = Number(input);
+  if (Number.isNaN(value)) {
+    return null;
+  }
+  return value;
+}
+
+function showMenu() {
+  console.log('============================');
+  console.log('     SIMPLE CALCULATOR');
+  console.log('============================');
+  console.log('1. Addition');
+  console.log('2. Subtraction');
+  console.log('3. Multiplication');
+  console.log('4. Division');
+  console.log('5. Modulus');
+  console.log('6. Exponentiation');
+  console.log('7. Quit');
+}
+
+function main() {
+  let running = true;
+
+  while (running) {
+    showMenu();
+    const choice = readlineSync.question('Select an operation (1-7): ');
+
+    if (choice === '7') {
+      console.log('Goodbye!');
+      running = false;
+      break;
+    }
+
+    const first = promptNumber('Enter first number: ');
+    if (first === null) {
+      console.log('Error: First value must be a valid number.');
+      console.log('');
+      continue;
+    }
+
+    const second = promptNumber('Enter second number: ');
+    if (second === null) {
+      console.log('Error: Second value must be a valid number.');
+      console.log('');
+      continue;
+    }
+
+    let result;
+    let operator;
+    let errorMessage = null;
+
+    switch (choice) {
+      case '1':
+        result = add(first, second);
+        operator = '+';
+        break;
+      case '2':
+        result = subtract(first, second);
+        operator = '-';
+        break;
+      case '3':
+        result = multiply(first, second);
+        operator = '*';
+        break;
+      case '4':
+        if (second === 0) {
+          errorMessage = 'Error: Cannot divide by zero.';
+        } else {
+          result = divide(first, second);
+          operator = '/';
+        }
+        break;
+      case '5':
+        if (second === 0) {
+          errorMessage = 'Error: Cannot divide by zero.';
+        } else {
+          result = modulus(first, second);
+          operator = '%';
+        }
+        break;
+      case '6':
+        result = exponentiate(first, second);
+        operator = '**';
+        break;
+      default:
+        errorMessage = 'Error: Invalid choice. Please select a number from 1 to 7.';
+    }
+
+    if (errorMessage) {
+      console.log(errorMessage);
+      console.log('');
+      continue;
+    }
+
+    console.log(`Result: ${first} ${operator} ${second} = ${result.toFixed(2)}`);
+    console.log('');
+  }
+}
+
+main();
 
